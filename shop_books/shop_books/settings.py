@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     # Apps
     'library',
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -130,9 +131,14 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Auth
+AUTH_USER_MODEL = 'account.User'
+
 # DRF
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+
