@@ -1,10 +1,11 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from faker import Faker
 from rest_framework.generics import get_object_or_404
 
 from library.models import Author, Book, Category, Comment
 import random
 
+User = get_user_model()
 fake = Faker()
 
 def create_authors(n):
@@ -26,7 +27,8 @@ def create_books(n):
             title=fake.sentence(nb_words=3),
             description=fake.text(),
             page=random.randint(100, 1000),
-            publication_date=fake.date()
+            publication_date=fake.date(),
+            price=random.randint(10, 1000)
         )
         book.save()
         book.author.set(random.sample(list(authors), random.randint(1, 3)))
@@ -50,5 +52,4 @@ def create_comments(n):
         comment.save()
 
 
-create_comments(30)
 

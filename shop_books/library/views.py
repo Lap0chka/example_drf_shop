@@ -1,10 +1,12 @@
 from typing import Any, List
+from urllib.request import Request
 
 from rest_framework import generics, status, viewsets
 from rest_framework.generics import get_object_or_404
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from library.models import Book, Author, Category, Comment
 from library.serializers import BookSerializer, AuthorSerializer, CategorySerializer, CommentSerializer
@@ -70,3 +72,12 @@ class CategoryViewSet(viewsets.ModelViewSet):
     def get_object(self) -> Category:
         """Retrieve a category object by slug."""
         return get_object_or_404(Category, slug=self.kwargs[self.lookup_field])
+
+
+class CommentViewSet(viewsets.ModelViewSet):
+    """ViewSet for managing comments."""
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    pagination_class = ResultsSetPagination
+    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
+    lookup_field = 'slug'
